@@ -40,11 +40,11 @@ $title = $slug->seo_title!='' ? $slug->seo_title : $slug->title;
     </div>
     @if($id)
     <!-- Card body -->
-    <div id="collapseOne{{ $list->id }}" class="collapse show" role="tabpanel" aria-labelledby="headingOne1"
+    <div id="collapseOne{{ $list->id }}" class="collapse @if($slug->parent == $list->id) show @endif" role="tabpanel" aria-labelledby="headingOne1"
       data-parent="#accordionEx">
       <div class="card-body card-in-list">
         <ul>@foreach($list->product as $list1)
-        	<li>
+        	<li style="@if($list1->title == $slug->title) background: #aaa; @endif">
         	    <a href="{{ $list1->slug }}"><i class="rotate-icon">»</i>  &nbsp;{{ $list1->title }}</a>
         	</li>
         	@endforeach
@@ -53,11 +53,11 @@ $title = $slug->seo_title!='' ? $slug->seo_title : $slug->title;
     </div>
     @else
      <!-- Card body -->
-    <div id="collapseOne{{ $list->id }}" class="collapse" role="tabpanel" aria-labelledby="headingOne1"
+    <div id="collapseOne{{ $list->id }}" class="collapse @if($slug->parent == $list->id) show @endif" role="tabpanel" aria-labelledby="headingOne1"
       data-parent="#accordionEx">
       <div class="card-body card-in-list">
         <ul>@foreach($list->product as $list1)
-        	<li>
+        	<li style="@if($list1->title == $slug->title) background: #aaa; @endif">
         	    <a href="{{ $list1->slug }}"><i class="rotate-icon">»</i>  &nbsp;{{ $list1->title }}</a>
         	</li>
         	@endforeach
@@ -156,7 +156,7 @@ $title = $slug->seo_title!='' ? $slug->seo_title : $slug->title;
 					<button class="btn search-btn div_width" onclick="open_pop()">Get Best Quote</button>
 				</div>
 			</div>
-			@if( !$faq->isEmpty() )
+			@if( !empty($faq) )
 			<h4 class="slug-title-heading faq-contant pt-3">FAQ</h4>
 			@else
 			@endif

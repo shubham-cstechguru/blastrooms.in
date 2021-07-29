@@ -99,7 +99,12 @@ Route::get('/clear-cache', function() {
     Route::get('faqs/remove/{id}','admin\FaqsController@remove');
     Route::post('faqs/removeMultiple','admin\FaqsController@removeMultiple');
     
-
+    Route::resources([
+        'city' => 'admin\CityController',
+        'country' => 'admin\CountryController',
+    ]);
+    Route::post('product/product-city/{id}', 'admin\LocationController@city')->name('locatecity');
+    Route::any('product/product-country/{id}', 'admin\LocationController@country');
 
 // change password
 
