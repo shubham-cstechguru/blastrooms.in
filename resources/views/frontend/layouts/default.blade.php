@@ -118,8 +118,8 @@ background:#3498db;left: 12px;top: 1px;color:#fff;"></i><span style="background:
 background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
       </div>
     </div>
-    <div class="row" style="background-color: #3498DB;-webkit-box-shadow: 0px 6px 10px -5px rgba(0,0,0,0.75);position: sticky;top: 0;z-index: 2;">
-      <div class="col-lg-12">
+    <div class="row" style="background-color: #3498DB;-webkit-box-shadow: 0px 6px 10px -5px rgba(0,0,0,0.75);position: sticky;top: 0;z-index: 1;">
+      <div class="col-10 col-lg-10 ">
         <nav class="navbar navbar-expand-lg navbar-light">
           <a href="{{url('/')}}" class="navbar-brandv my_logo" style="padding:0px;margin:0px;">
             @if($setting->logo !='')
@@ -134,7 +134,7 @@ background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
           </button>
 
           <div class="collapse navbar-collapse ml-5" id="navbarSupportedContent" itemprop="breadcrumb">
-            <ul class="navbar-nav mr-auto">
+            <ul class="navbar-nav m-auto">
               <li class="nav-item" style="text-align:right;">
                 <a class="nav-link" href="{{ url('/') }}">Home</a>
               </li>
@@ -154,6 +154,11 @@ background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
 
           </div>
         </nav>
+      </div>
+      <div class="col-2 col-md-2">
+        <div class="py-md-2 d-flex" style="color: #ffffff; cursor: pointer;" onclick="open_search()">
+          <i class="fa fa-search mt-1"></i> &nbsp; &nbsp; <p class="d-none d-sm-none d-md-none d-lg-block d-xl-block p-0 m-0">Search</p>
+        </div>
       </div>
     </div>
 
@@ -278,12 +283,28 @@ background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
     </section>
     @show
   </div>
-  <!-- ALL JS FILES -->
-  {{ Html::script('js/jquery.min.js') }}
-  {{ Html::script('js/popper.min.js') }}
-  {{ Html::script('js/bootstrap.min.js') }}
-  {{ Html::script('js/ajax.js') }}
+  <div class="modal search-modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="background: rgba(0, 0, 0, 0.5);">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span type="button" class="close btn-lg" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </span>
+        </div>
+        <div class="modal-body">
 
+          {{ Form::open(['id'=>'search_form', 'data-url'=>route('ajax-search')]) }}
+          <div class="md-form">
+            {{ Form::text('search', '', ['class' => 'form-control validate name py-3 search', 'id'=>'search', 'placeholder'=>'Search Product','required'=>'required'])}}
+          </div>
+          {{ Form::close() }}
+
+          <ul class="list-group search-list">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
@@ -340,6 +361,11 @@ background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
       </div>
     </div>
   </div>
+  <!-- ALL JS FILES -->
+  {{ Html::script('js/jquery.min.js') }}
+  {{ Html::script('js/popper.min.js') }}
+  {{ Html::script('js/bootstrap.min.js') }}
+  {{ Html::script('js/ajax.js') }}
   </div>
   </div>
   </div>
@@ -348,6 +374,15 @@ background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
     function open_pop() {
       $('.modal').modal('show');
     }
+
+    function open_search() {
+      $('.search-modal').modal('show');
+    }
+
+    $('.search-modal').on('shown.bs.modal', function() {
+      $('input:text:visible:last').focus();
+    })
+
     $('.responsive').slick({
 
       infinite: true,
@@ -401,6 +436,48 @@ background:#3498db;right: -33px;top: 1px;color:#fff;"></i></span>
       });
 
     });
+  </script>
+
+<script>
+    // Open the Modal
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+
+    // Close the Modal
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("demo");
+      var captionText = document.getElementById("caption");
+      if (n > slides.length) {
+        slideIndex = 1
+      }
+      if (n < 1) {
+        slideIndex = slides.length
+      }
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex - 1].style.display = "block";
+      dots[slideIndex - 1].className += " active";
+    }
   </script>
 </body>
 
